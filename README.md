@@ -19,3 +19,5 @@ Usage:
 ```
 
 Example: `./discordlfm -t "my secret discord token" -l "my secret last.fm api key" -u "jonasr747"`
+
+Guide on retrieving the api lfm api key and discord token: https://github.com/jonas747/discordlfm/issues/2#issuecomment-278950579
