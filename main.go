@@ -3,11 +3,23 @@ package main
 import (
 	"errors"
 	"flag"
+	"fmt"
 	"github.com/bwmarrin/discordgo"
 	"github.com/shkh/lastfm-go/lastfm"
 	"log"
+	"os"
 	"sync"
 	"time"
+)
+
+const (
+	VERSION_MAJOR = 1
+	VERSION_MINOR = 0
+	VERSIN_PATCH  = 0
+)
+
+var (
+	VersionString = fmt.Sprintf("%d.%d.%d", VERSION_MAJOR, VERSION_MINOR, VERSIN_PATCH)
 )
 
 var (
@@ -22,25 +34,25 @@ func init() {
 	flag.StringVar(&flagDiscordToken, "t", "", "Discord token")
 	flag.StringVar(&flagLFMAPIKey, "l", "", "Last.fm api key")
 	flag.StringVar(&flagLFMUsername, "u", "", "Last.fm username")
-	flag.StringVar(&flagNoSong, "g", "", "Game to set to if there hasn't been a new song for a while") //"" clears playing status
+	flag.StringVar(&flagNoSong, "g", "Silcence", "Game to set to if there hasn't been a new song for a while")
 	flag.IntVar(&flagNoSongDuration, "n", 60*10, "Number of seconds without a new song for it to be considered nothing.")
 	flag.Parse()
 }
 
 func main() {
+	log.Println("Starting up... v" + VersionString)
+
 	if flagDiscordToken == "" {
-		log.Fatal("No discord token specified")
+		fatal("No discord token specified")
 	}
 
 	if flagLFMAPIKey == "" {
-		log.Fatal("No lastfm api key specified")
+		fatal("No lastfm api key specified")
 	}
 
 	if flagLFMUsername == "" {
-		log.Fatal("No last.fm username specified")
+		fatal("No last.fm username specified")
 	}
-
-	log.Println("Starting up...")
 
 	// Setup lastfm
 	lfm := lastfm.New(flagLFMAPIKey, "")
@@ -48,7 +60,7 @@ func main() {
 	// Setup discord
 	dsession, err := discordgo.New(flagDiscordToken)
 	if err != nil {
-		log.Fatal("Error creating discord session:", err)
+		fatal("Error creating discord session:", err)
 	}
 
 	var wg sync.WaitGroup
@@ -59,7 +71,7 @@ func main() {
 
 	err = dsession.Open()
 	if err != nil {
-		log.Fatal("Error opening discord ws conn:", err)
+		fatal("Error opening discord ws conn:", err)
 	}
 
 	wg.Wait()
@@ -93,11 +105,7 @@ func run(s *discordgo.Session, lfm *lastfm.Api) {
 				if err != nil {
 					log.Println("Error updating status:", err)
 				} else {
-					if flagNoSong == "" {
-						log.Println("Cleared playing status")
-					} else { 
-						log.Println("Updated status to:", flagNoSong)
-					}
+					log.Println("Updated status to:", flagNoSong)
 					setFallback = true
 				}
 
@@ -130,4 +138,14 @@ func check(lfm *lastfm.Api) (string, error) {
 	track := recent.Tracks[0]
 
 	return "♩" + track.Name + " by " + track.Artist.Name + "♩", nil
+}
+
+func fatal(args ...interface{}) {
+	log.Println(args...)
+	log.Print("Press enter to quit...")
+
+	var input rune
+	fmt.Scanf("%c", &input)
+
+	os.Exit(1)
 }
