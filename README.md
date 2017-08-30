@@ -1,6 +1,15 @@
-#discordlfm - Discord Last FM 
+# Last FM -> Discord status scrobbling
 
-Sets your "game" to the last song played on your last.fm
+Sets your "game" to the last, or currently playing song played on your last.fm
+
+### To download pre-compiled executables see [releases](https://github.com/jonas747/discordlfm/releases)
+
+### To compile it yourself:
+ 1. Install and set up go
+ 2. Run `go get -u github.com/jonas747/discordlfm`
+ 3. Switch to the develop branch of discordgo (master statuses currently broken) (`cd $GOPATH/src/github.com/bwmarrin/discordgo && git checkout develop`
+ 4. Re-compile discordlfm (`go install -a -v github.com/jonas747/discordlfm`)
+ 5. It should now be built in `$GOPATH/bin` unless it threw errors
 
 Usage:
 ```
@@ -18,4 +27,4 @@ Usage:
 
 Example: `./discordlfm -t "my secret discord token" -l "my secret last.fm api key" -u "jonasr747"`
 
-Guide on retrieving the api lfm api key and discord token: https://github.com/jonas747/discordlfm/issues/2#issuecomment-278950579
+Guide on retrieving the lfm api key and discord token: https://github.com/jonas747/discordlfm/issues/2#issuecomment-278950579
