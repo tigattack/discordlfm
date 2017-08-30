@@ -2,6 +2,12 @@
 
 Sets your "game" to the last, or currently playing song played on your last.fm
 
+### !Important!
+
+ - Discord is against custom clients and self-bots like this so while no one that has used this has gotten banned for it yet (as far as i know) and you **probably** wont, i can make no guarantees. **USE ON OWN RISK**. I am not responsible for you getting banned from discord.
+ - You will not be able to see the status yourself in the client, you should log into a second account or ask a friend to confirm wether it's working or not.
+ - You should probably turn off "Display currently running game as status message" in the client when using this, otherwise it will override this when you launch a game or something.
+
 ### To download pre-compiled executables see [releases](https://github.com/jonas747/discordlfm/releases)
 
 ### To compile it yourself:
