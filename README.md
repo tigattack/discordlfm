@@ -13,9 +13,7 @@ Sets your "game" to the last, or currently playing song played on your last.fm
 ### To compile it yourself:
  1. Install and set up go
  2. Run `go get -u github.com/jonas747/discordlfm`
- 3. Switch to the develop branch of discordgo (master statuses currently broken) (`cd $GOPATH/src/github.com/bwmarrin/discordgo && git checkout develop`
- 4. Re-compile discordlfm (`go install -a -v github.com/jonas747/discordlfm`)
- 5. It should now be built in `$GOPATH/bin` unless it threw errors
+ 3. It should now be built in `$GOPATH/bin` unless it threw errors
 
 Usage:
 ```
