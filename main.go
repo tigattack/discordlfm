@@ -137,7 +137,7 @@ func check(lfm *lastfm.Api) (string, error) {
 
 	track := recent.Tracks[0]
 
-	return "♩" + track.Name + " by " + track.Artist.Name + "♩", nil
+	 return "♫ " + track.Name + " - " + track.Artist.Name + " ♫", nil 
 }
 
 func fatal(args ...interface{}) {
