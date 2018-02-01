@@ -110,19 +110,21 @@ func run(s *discordgo.Session, lfm *lastfm.Api) {
 				}
 
 			}
-		} else {
-
+		}
+		else {
 			err = s.UpdateStatus(0, flagNoSong)
 			if err != nil {
 				log.Println("Error updating status:", err)
-			} else {
+			}
+			else {
 				if flagNoSong == "" {
 					log.Println("Cleared playing status")
-				} else { 
+				}
+				else {
 					log.Println("Updated status to:", flagNoSong)
+				}
 			}
 			setFallback = true
-
 		}
 	}
 }
