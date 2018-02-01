@@ -2,6 +2,9 @@
 
 Sets your "game" to the last, or currently playing song played on your last.fm
 
+For easy starting of this script, grab the `run.bat.sample`.
+Make a copy of it and rename to `run.bat`, then input your details and save. You can now run this to start the script.
+
 ### !Important!
 
  - Discord is against custom clients and self-bots like this so while no one that has used this has gotten banned for it yet (as far as i know) and you **probably** wont, i can make no guarantees. **USE ON OWN RISK**. I am not responsible for you getting banned from discord.
