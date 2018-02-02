@@ -89,11 +89,11 @@ func run(s *discordgo.Session, lfm *lastfm.Api) {
 		if isPlaying == false {
 			if flagNoSong == "" {
 				//Please note, there is currently no way to set no game, due to bad coding in the Discord API being used by this bot. Hence a default value must be set.
-				s.UpdateStatus(0, "Not currently playing any track.")
+				s.UpdateStatus(0, "Not currently playing anything.")
 			} else {
 				s.UpdateStatus(0, flagNoSong)
 			}
-			log.Println("Not currently playing any track.")
+			log.Println("Not currently playing anything.")
 		} else if err != nil {
 			log.Println("Error checking:", err)
 			continue
