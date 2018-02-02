@@ -4,12 +4,13 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/bwmarrin/discordgo"
-	"github.com/shkh/lastfm-go/lastfm"
 	"log"
 	"os"
 	"sync"
 	"time"
+
+	"github.com/bwmarrin/discordgo"
+	"github.com/shkh/lastfm-go/lastfm"
 )
 
 const (
@@ -23,11 +24,10 @@ var (
 )
 
 var (
-	flagDiscordToken   string
-	flagLFMAPIKey      string
-	flagLFMUsername    string
-	flagNoSong         string
-	flagNoSongDuration int
+	flagDiscordToken string
+	flagLFMAPIKey    string
+	flagLFMUsername  string
+	flagNoSong       string
 )
 
 func init() {
@@ -35,7 +35,6 @@ func init() {
 	flag.StringVar(&flagLFMAPIKey, "l", "", "Last.fm api key")
 	flag.StringVar(&flagLFMUsername, "u", "", "Last.fm username")
 	flag.StringVar(&flagNoSong, "g", "", "Game to set to if there hasn't been a new song for a while")
-	flag.IntVar(&flagNoSongDuration, "n", 60*10, "Number of seconds without a new song for it to be considered nothing.")
 	flag.Parse()
 }
 
@@ -84,64 +83,42 @@ func run(s *discordgo.Session, lfm *lastfm.Api) {
 	// Run continously untill somethign catches fire or an std
 	ticker := time.NewTicker(time.Second * 10)
 
-	lastPlaying := ""
-	var lastPlayingTime time.Time
-	setFallback := false
-
 	for {
 		<-ticker.C
-
-		playing, err := check(lfm)
-		if err != nil {
+		playing, err, isPlaying := check(lfm)
+		if isPlaying == false {
+			if flagNoSong == "" {
+				//Please note, there is currently no way to set no game, due to bad coding in the Discord API being used by this bot. Hence a default value must be set.
+				s.UpdateStatus(0, "Not currently playing any track.")
+			} else {
+				s.UpdateStatus(0, flagNoSong)
+			}
+			log.Println("Not currently playing any track.")
+		} else if err != nil {
 			log.Println("Error checking:", err)
 			continue
-		}
-
-		if playing == lastPlaying {
-
-			if !setFallback && time.Since(lastPlayingTime).Seconds() > float64(flagNoSongDuration) {
-
-				err = s.UpdateStatus(0, flagNoSong)
-				if err != nil {
-					log.Println("Error updating status:", err)
-				} else {
-					log.Println("Updated status to:", flagNoSong)
-					setFallback = true
-				}
-
-			}
-		}
-		else {
-			err = s.UpdateStatus(0, flagNoSong)
-			if err != nil {
-				log.Println("Error updating status:", err)
-			}
-			else {
-				if flagNoSong == "" {
-					log.Println("Cleared playing status")
-				}
-				else {
-					log.Println("Updated status to:", flagNoSong)
-				}
-			}
-			setFallback = true
+		} else {
+			s.UpdateStatus(0, playing)
+			log.Println("Updated status to:", playing)
 		}
 	}
 }
 
-func check(lfm *lastfm.Api) (string, error) {
+func check(lfm *lastfm.Api) (string, error, bool) {
 	recent, err := lfm.User.GetRecentTracks(map[string]interface{}{"user": flagLFMUsername})
 	if err != nil {
-		return "", err
+		return "", err, true
 	}
 
 	if len(recent.Tracks) < 1 {
-		return "", errors.New("No tracks")
+		return "", errors.New("No tracks"), true
 	}
-
 	track := recent.Tracks[0]
-
-	 return "♫ " + track.Name + " - " + track.Artist.Name + " ♫", nil 
+	if track.NowPlaying == "" {
+		return "", nil, false
+	} else {
+		return "♫ " + track.Artist.Name + " - " + track.Name + " ♫", nil, true
+	}
 }
 
 func fatal(args ...interface{}) {
