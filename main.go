@@ -4,12 +4,13 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/bwmarrin/discordgo"
-	"github.com/shkh/lastfm-go/lastfm"
 	"log"
 	"os"
 	"sync"
 	"time"
+
+	"github.com/bwmarrin/discordgo"
+	"github.com/shkh/lastfm-go/lastfm"
 )
 
 const (
@@ -90,7 +91,6 @@ func run(s *discordgo.Session, lfm *lastfm.Api) {
 
 	for {
 		<-ticker.C
-
 		playing, err := check(lfm)
 		if err != nil {
 			log.Println("Error checking:", err)
@@ -110,17 +110,14 @@ func run(s *discordgo.Session, lfm *lastfm.Api) {
 				}
 
 			}
-		}
-		else {
+		} else {
 			err = s.UpdateStatus(0, flagNoSong)
 			if err != nil {
 				log.Println("Error updating status:", err)
-			}
-			else {
+			} else {
 				if flagNoSong == "" {
 					log.Println("Cleared playing status")
-				}
-				else {
+				} else {
 					log.Println("Updated status to:", flagNoSong)
 				}
 			}
@@ -141,7 +138,7 @@ func check(lfm *lastfm.Api) (string, error) {
 
 	track := recent.Tracks[0]
 
-	 return "♫ " + track.Name + " - " + track.Artist.Name + " ♫", nil 
+	return "♫ " + track.Name + " - " + track.Artist.Name + " ♫", nil
 }
 
 func fatal(args ...interface{}) {
