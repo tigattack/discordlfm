@@ -89,16 +89,16 @@ func run(s *discordgo.Session, lfm *lastfm.Api) {
 		if playing != lastPlaying {
 			if isPlaying == false {
 				if flagNoSong == "" {
-					s.UpdateStatus(0, "", false)
+					s.UpdateListeningStatus(0, "")
 				} else {
-					s.UpdateStatus(0, flagNoSong, false)
+					s.UpdateListeningStatus(0, flagNoSong)
 				}
 				log.Println("Not currently playing anything.")
 			} else if err != nil {
 				log.Println("Error checking:", err)
 				continue
 			} else {
-				s.UpdateStatus(0, playing, true)
+				s.UpdateListeningStatus(0, playing)
 				log.Println("Updated status to:", playing)
 			}
 		}
@@ -119,7 +119,7 @@ func check(lfm *lastfm.Api) (string, error, bool) {
 	if track.NowPlaying == "" {
 		return "", nil, false
 	} else {
-		return "♫ " + track.Artist.Name + " - " + track.Name + " ♫", nil, true
+		return track.Artist.Name + " - " + track.Name, nil, true
 	}
 }
 
