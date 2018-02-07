@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/bwmarrin/discordgo"
+	"github.com/dannyt66/discordgo"
 	"github.com/shkh/lastfm-go/lastfm"
 )
 
@@ -89,16 +89,16 @@ func run(s *discordgo.Session, lfm *lastfm.Api) {
 		if isPlaying == false {
 			if flagNoSong == "" {
 				//Please note, there is currently no way to set no game, due to bad coding in the Discord API being used by this bot. Hence a default value must be set.
-				s.UpdateStatus(0, "Not currently playing any track.")
+				s.UpdateStatus(0, "", false)
 			} else {
-				s.UpdateStatus(0, flagNoSong)
+				s.UpdateStatus(0, flagNoSong, false)
 			}
 			log.Println("Not currently playing any track.")
 		} else if err != nil {
 			log.Println("Error checking:", err)
 			continue
 		} else {
-			s.UpdateStatus(0, playing)
+			s.UpdateStatus(0, playing, true)
 			log.Println("Updated status to:", playing)
 		}
 	}
