@@ -93,7 +93,7 @@ func run(s *discordgo.Session, lfm *lastfm.Api) {
 				} else {
 					s.UpdateStatus(0, flagNoSong, false)
 				}
-				log.Println("Not currently playing any track.")
+				log.Println("Not currently playing anything.")
 			} else if err != nil {
 				log.Println("Error checking:", err)
 				continue
