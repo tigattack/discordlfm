@@ -119,7 +119,7 @@ func check(lfm *lastfm.Api) (string, error, bool) {
 	if track.NowPlaying == "" {
 		return "", nil, false
 	} else {
-		return "♫ " + track.Artist.Name + " - " + track.Name + " ♫", nil, true
+		return track.Artist.Name + " - " + track.Name, nil, true
 	}
 }
 
