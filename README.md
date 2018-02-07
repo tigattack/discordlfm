@@ -11,11 +11,10 @@ Make a copy of it and rename to `run.bat`, then input your details and save. You
  - You will not be able to see the status yourself in the client, you should log into a second account or ask a friend to confirm wether it's working or not.
  - You should probably turn off "Display currently running game as status message" in the client when using this, otherwise it will override this when you launch a game or something.
 
-### To download pre-compiled executables see [releases](https://github.com/jonas747/discordlfm/releases)
 
 ### To compile it yourself:
  1. Install and set up go
- 2. Run `go get -u github.com/jonas747/discordlfm`
+ 2. Run `go get -u github.com/dannyt66/discordlfm`
  3. It should now be built in `$GOPATH/bin` unless it threw errors
 
 Usage:
