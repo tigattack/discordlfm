@@ -63,10 +63,10 @@ func main() {
 	}
 
 	var wg sync.WaitGroup
+	wg.Add(1)
 	dsession.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
 		wg.Done()
 	})
-	wg.Add(1)
 
 	err = dsession.Open()
 	if err != nil {
