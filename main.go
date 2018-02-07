@@ -81,7 +81,7 @@ func main() {
 
 func run(s *discordgo.Session, lfm *lastfm.Api) {
 	// Run continously untill somethign catches fire or an std
-	ticker := time.NewTicker(time.Second * 10)
+	ticker := time.NewTicker(time.Second * 15)
 
 	for {
 		<-ticker.C
