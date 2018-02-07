@@ -9,7 +9,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/bwmarrin/discordgo"
+	"github.com/dannyt66/discordgo"
 	"github.com/shkh/lastfm-go/lastfm"
 )
 
@@ -81,26 +81,28 @@ func main() {
 
 func run(s *discordgo.Session, lfm *lastfm.Api) {
 	// Run continously untill somethign catches fire or an std
-	ticker := time.NewTicker(time.Second * 10)
-
+	ticker := time.NewTicker(time.Second * 15)
+	lastPlaying := ""
 	for {
 		<-ticker.C
 		playing, err, isPlaying := check(lfm)
-		if isPlaying == false {
-			if flagNoSong == "" {
-				//Please note, there is currently no way to set no game, due to bad coding in the Discord API being used by this bot. Hence a default value must be set.
-				s.UpdateStatus(0, "Not currently playing anything.")
+		if playing != lastPlaying {
+			if isPlaying == false {
+				if flagNoSong == "" {
+					s.UpdateStatus(0, "", false)
+				} else {
+					s.UpdateStatus(0, flagNoSong, false)
+				}
+				log.Println("Not currently playing anything.")
+			} else if err != nil {
+				log.Println("Error checking:", err)
+				continue
 			} else {
-				s.UpdateStatus(0, flagNoSong)
+				s.UpdateStatus(0, playing, true)
+				log.Println("Updated status to:", playing)
 			}
-			log.Println("Not currently playing anything.")
-		} else if err != nil {
-			log.Println("Error checking:", err)
-			continue
-		} else {
-			s.UpdateStatus(0, playing)
-			log.Println("Updated status to:", playing)
 		}
+		lastPlaying = playing
 	}
 }
 
