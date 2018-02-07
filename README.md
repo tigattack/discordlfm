@@ -14,7 +14,7 @@ Make a copy of it and rename to `run.bat`, then input your details and save. You
 
 ### To compile it yourself:
  1. Install and set up go
- 2. Run `go get -u github.com/dannyt66/discordlfm`
+ 2. Run `go get -u <repo>` where `<repo>` is the URL of the repo, beginning `github.com/`.
  3. It should now be built in `$GOPATH/bin` unless it threw errors
 
 Usage:
