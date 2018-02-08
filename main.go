@@ -16,7 +16,7 @@ import (
 const (
 	VERSION_MAJOR = 2
 	VERSION_MINOR = 0
-	VERSIN_PATCH  = 1
+	VERSIN_PATCH  = 2
 )
 
 var (
@@ -64,7 +64,7 @@ func main() {
 
 	var wg sync.WaitGroup
 	wg.Add(1)
-	dsession.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
+	dsession.AddHandlerOnce(func(s *discordgo.Session, r *discordgo.Ready) {
 		wg.Done()
 	})
 
