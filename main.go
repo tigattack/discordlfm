@@ -64,7 +64,8 @@ func main() {
 
 	var wg sync.WaitGroup
 	wg.Add(1)
-	dsession.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
+	dsession.AddHandlerOnce(func(s *discordgo.Session, r *discordgo.Ready) {
+		log.Println("Handler registered.")
 		wg.Done()
 	})
 
