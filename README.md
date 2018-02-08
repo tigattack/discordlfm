@@ -1,19 +1,19 @@
 # Last FM -> Discord status scrobbling
 
-Sets your "game" to the last, or currently playing song played on your last.fm
+Sets your "listening to" status on Discord to the currently playing song according to your Last.fm profile.
 
-For easy starting of this script, grab the `run.bat.sample`.
+For easy starting of this script, grab the latest release and the `run.bat.sample` file.
 Make a copy of it and rename to `run.bat`, then input your details and save. You can now run this to start the script.
 
 ### !Important!
 
- - Discord is against custom clients and self-bots like this so while no one that has used this has gotten banned for it yet (as far as i know) and you **probably** wont, i can make no guarantees. **USE ON OWN RISK**. I am not responsible for you getting banned from discord.
+ - Discord is against custom clients and self-bots like this so while no one that has used this has been banned for it yet (as far as I know) and you **probably** wont, I can make no guarantees. **USE AT YOUR OWN RISK**. I am not responsible for you getting banned from Discord.
  - You will not be able to see the status yourself in the client, you should log into a second account or ask a friend to confirm wether it's working or not.
- - You should probably turn off "Display currently running game as status message" in the client when using this, otherwise it will override this when you launch a game or something.
+ - You should probably turn off "Display currently running game as status message" in the client when using this, otherwise it will override this when you launch a game.
 
 
 ### To compile it yourself:
- 1. Install and set up go
+ 1. Install and set up [Go](https://golang.org/doc/install) and [Git](https://git-scm.com/download).
  2. Run `go get -u <repo>` where `<repo>` is the URL of the repo, beginning `github.com/`.
  3. It should now be built in `$GOPATH/bin` unless it threw errors
 
@@ -23,8 +23,6 @@ Usage:
         Game to set to if there hasn't been a new song for a while (default "", clears playing status)
   -l string
         Last.fm api key
-  -n int
-        Number of seconds without a new song for it to be considered nothing. (default 600)
   -t string
         Discord token
   -u string
