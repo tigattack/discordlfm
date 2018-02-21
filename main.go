@@ -28,6 +28,7 @@ var (
 	flagLFMAPIKey    string
 	flagLFMUsername  string
 	flagNoSong       string
+	flagStatus       string
 )
 
 func init() {
@@ -35,6 +36,7 @@ func init() {
 	flag.StringVar(&flagLFMAPIKey, "l", "", "Last.fm api key")
 	flag.StringVar(&flagLFMUsername, "u", "", "Last.fm username")
 	flag.StringVar(&flagNoSong, "g", "", "Game to set to if there hasn't been a new song for a while")
+	flag.StringVar(&flagStatus, "s", "", "Status the bot should set the user to")
 	flag.Parse()
 }
 
@@ -89,16 +91,16 @@ func run(s *discordgo.Session, lfm *lastfm.Api) {
 		if playing != lastPlaying {
 			if isPlaying == false {
 				if flagNoSong == "" {
-					s.UpdateListeningStatus(0, "")
+					s.UpdateListeningStatus("")
 				} else {
-					s.UpdateListeningStatus(0, flagNoSong)
+					s.UpdateListeningStatus(flagNoSong)
 				}
 				log.Println("Not currently playing anything.")
 			} else if err != nil {
 				log.Println("Error checking:", err)
 				continue
 			} else {
-				s.UpdateListeningStatus(0, playing)
+				s.UpdateListeningStatus(playing)
 				log.Println("Updated status to:", playing)
 			}
 		}
