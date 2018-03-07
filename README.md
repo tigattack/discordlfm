@@ -20,13 +20,15 @@ Make a copy of it and rename to `run.bat`, then input your details and save. You
 Usage:
 ```
   -g string
-        Game to set to if there hasn't been a new song for a while (default "", clears playing status)
+        Game to set to if there hasn't been a new song for a while (if unset, the playing status will be cleared when nothing is playing)
   -l string
         Last.fm api key
   -t string
         Discord token
   -u string
         Last.fm username
+  -s string
+        Status the bot should set the user to (if unset, the user's client status is respected. If set, bot will over-ride every client)
 ```
 
 Example: `./discordlfm -t "my secret discord token" -l "my secret last.fm api key" -u "jonasr747"`
